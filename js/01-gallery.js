@@ -21,20 +21,18 @@ function createGalleryItem(obj) {
 
 function onShowModal(e) {
 	e.preventDefault();
-	if (!e.target.closest(".gallery__item")) return;
+
+	const condition = e.target.closest(".gallery__item");
+
+	if (!condition) return;
+
 	const instance = basicLightbox.create(
-		`
-		<img src="${e.target.dataset.source}">
-`,
-		// { closable: false },
+		`<img src="${e.target.dataset.source}">`,
 	);
-	if (e.target.closest(".gallery__item")) {
-		instance.show();
-	}
+	instance.show();
 	window.addEventListener("keydown", (e) => {
-		if (e.code === "Escape") {
-			instance.close();
-		}
+		if (e.code !== "Escape") return;
+		instance.close();
 	});
 }
 
