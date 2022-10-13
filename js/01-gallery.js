@@ -34,13 +34,13 @@ function onShowModal(e) {
 	if (!condition) return;
 	instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`);
 	instance.show();
-	window.addEventListener("keydown", closeModalKeyEsc);
+	window.addEventListener("keydown", onCloseModalKeyEsc);
 }
 
-function closeModalKeyEsc(e) {
+function onCloseModalKeyEsc(e) {
 	if (e.code === "Escape") {
 		instance.close();
-		window.removeEventListener("keydown", closeModalKeyEsc);
+		window.removeEventListener("keydown", onCloseModalKeyEsc);
 	}
 }
 
