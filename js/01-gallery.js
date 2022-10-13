@@ -32,7 +32,11 @@ function onShowModal(e) {
 	e.preventDefault();
 	const condition = e.target.closest(".gallery__item");
 	if (!condition) return;
-	instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`);
+	instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`, {
+		onClose: (instance) => {
+			window.removeEventListener("keydown", onCloseModalKeyEsc);
+		},
+	});
 	instance.show();
 	window.addEventListener("keydown", onCloseModalKeyEsc);
 }
@@ -40,7 +44,6 @@ function onShowModal(e) {
 function onCloseModalKeyEsc(e) {
 	if (e.code === "Escape") {
 		instance.close();
-		window.removeEventListener("keydown", onCloseModalKeyEsc);
 	}
 }
 
