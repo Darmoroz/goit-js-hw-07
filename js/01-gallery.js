@@ -3,6 +3,7 @@ import { galleryItems } from "./gallery-items.js";
 const refs = {
 	galerry: document.querySelector(".gallery"),
 };
+let instance;
 
 refs.galerry.insertAdjacentHTML(
 	"afterbegin",
@@ -31,15 +32,16 @@ function onShowModal(e) {
 	e.preventDefault();
 	const condition = e.target.closest(".gallery__item");
 	if (!condition) return;
-	const instance = basicLightbox.create(
-		`<img src="${e.target.dataset.source}">`,
-	);
+	instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`);
 	instance.show();
-	window.addEventListener("keydown", (e) => {
-		if (e.code === "Escape") {
-			instance.close();
-		}
-	});
+	window.addEventListener("keydown", closeModalKeyEsc);
+}
+
+function closeModalKeyEsc(e) {
+	if (e.code === "Escape") {
+		instance.close();
+		window.removeEventListener("keydown", closeModalKeyEsc);
+	}
 }
 
 //* Another case
